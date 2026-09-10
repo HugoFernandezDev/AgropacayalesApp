@@ -1,29 +1,48 @@
 # dependencies
 node_modules/
 
-# Expo
+# Environment and secrets (Cybersecurity)
+.env
+.env.*
+*.env
+*.env.local
+*.env.production
+*.env.development
+secrets/
+credentials.json
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+
+# Expo & Build outputs
 .expo/
 dist/
 web-build/
 expo-env.d.ts
 
-# Native
+# Native builds & signing keystores
 .kotlin/
 *.orig.*
 *.jks
 *.p8
-*.p12
-*.key
 *.mobileprovision
+/ios
+/android
 
-# Metro
+# Metro cache
 .metro-health-check*
 
-# debug
+# Debug and runtime logs
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+*.log
 
-# OS
+# OS & Editor metadata
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
