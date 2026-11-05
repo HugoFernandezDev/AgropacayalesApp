@@ -78,6 +78,17 @@ export default function HomeScreen() {
           </View>
         </View>
 
+        {/* Banner Indicador de Almacenamiento Local Offline (AP7) */}
+        <View style={styles.offlineStatusBanner}>
+          <View style={styles.offlineStatusLeft}>
+            <Ionicons name="server" size={14} color="#2E7D32" style={{ marginRight: 6 }} />
+            <Text style={styles.offlineStatusTitle}>Almacenamiento Local Offline Activo (AP7)</Text>
+          </View>
+          <View style={styles.offlineBadge}>
+            <Text style={styles.offlineBadgeText}>AsyncStorage</Text>
+          </View>
+        </View>
+
         {/* Imagen representativa del Fundo / Campos */}
         <View style={styles.heroCard}>
           <Image
@@ -438,6 +449,38 @@ const styles = StyleSheet.create({
   resetFilterText: {
     color: Colors.white,
     fontSize: 13,
+    fontWeight: 'bold',
+  },
+  offlineStatusBanner: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#E8F5E9',
+    borderRadius: BorderRadius.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 7,
+    marginBottom: Spacing.md,
+    borderWidth: 1,
+    borderColor: '#C8E6C9',
+  },
+  offlineStatusLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  offlineStatusTitle: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#2E7D32',
+  },
+  offlineBadge: {
+    backgroundColor: '#2E7D32',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.xs,
+  },
+  offlineBadgeText: {
+    color: Colors.white,
+    fontSize: 9,
     fontWeight: 'bold',
   },
 });

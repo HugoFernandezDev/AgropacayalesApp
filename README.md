@@ -1,9 +1,32 @@
 # 🌱 AgroPacayales Móvil — Prototipo Móvil React Native
 
-> **S07 | AP4 • DESARROLLO DE APLICACIONES MÓVILES (DAM)**  
+> **S13 | AP7 • DESARROLLO DE APLICACIONES MÓVILES (DAM)**  
+> **Actividad Práctica Individual:** *Reto práctico: Potencia tu aplicación móvil*  
+> **Funcionalidad Avanzada Implementada:** **Almacenamiento Local Offline (AsyncStorage)**  
 > **Instituto de Educación Superior Privado Valle Grande**  
 > **Estudiante:** Hugo Fernandez  
 > **Proyecto:** Agro Pacayales S.A.C. (Valle de Cañete, Lima - Perú)  
+
+---
+
+## 💾 Funcionalidad Avanzada Implementada: Almacenamiento Local (AP7)
+
+De acuerdo a la **Regla de Trabajo de la Semana 13**, se seleccionó e integró la opción:
+
+**`Almacenamiento: Guarda y recupera datos locales sin base externa.`**
+
+### 🎯 Justificación Técnica & Agronómica
+Los agrónomos de **Agro Pacayales S.A.C.** monitorean lotes agrícolas en áreas rurales del Valle de Cañete donde frecuentemente **no hay conectividad a internet (modo Offline-first)**. Mediante el uso de `@react-native-async-storage/async-storage`:
+1. **Persistencia Total Sin Servidor:** Las inspecciones fitosanitarias registradas en campo se guardan físicamente en la memoria local del dispositivo (clave `@agropacayales_inspections_v1_<cropId>`).
+2. **Ciclo Completo CRUD Local:**
+   - **Lectura (Read):** Carga asíncrona automática al ingresar al detalle del lote.
+   - **Creación (Create):** Inserción inmediata de nuevas inspecciones técnicas con fecha, hora, tipo de control y notas de campo.
+   - **Eliminación (Delete):** Borrado selectivo de registros locales con confirmación interactiva.
+   - **Restablecimiento:** Opción para resetear a los valores iniciales de base.
+3. **Indicadores Visuales en Tiempo Real:**
+   - Banner de estado *Almacenamiento Local Offline Activo* en la Pantalla Principal (`home.tsx`).
+   - Módulo interactivo de estadísticas de almacenamiento local en la Pantalla de Detalle (`detail.tsx`), indicando clave, total en disco y registros creados en el equipo.
+   - Badges distintivos en la bitácora: `💾 Storage Local` vs `📁 Base`.
 
 ---
 
@@ -105,6 +128,7 @@ El prototipo cumple rigurosamente con los requerimientos del documento **S07 | A
 | **Iconografía** | **Iconos vectoriales profesionales** con `@expo/vector-icons` (`Ionicons` y `MaterialCommunityIcons`), sin emojis de texto plano. |
 | **Estilos** | `StyleSheet.create` con tokens limpios en `src/constants/theme.ts`. |
 | **Navegación Móvil** | `Expo Router` con enrutador tipo `Stack` sin dependencias de backend requeridas. |
+| **Almacenamiento Local (AP7)** | `@react-native-async-storage/async-storage` para persistencia local de inspecciones sin conexión ni base de datos externa. |
 
 ---
 
@@ -114,7 +138,7 @@ El prototipo cumple rigurosamente con los requerimientos del documento **S07 | A
 AgroPacayales/
 ├── README.md                      # Guía completa y credenciales
 ├── app.json                       # Configuración de Expo
-├── package.json                   # Dependencias oficiales (Expo 57, Vector Icons)
+├── package.json                   # Dependencias oficiales (Expo, AsyncStorage, Vector Icons)
 ├── tsconfig.json                  # TypeScript estricto
 ├── .gitignore                     # Exclusiones git
 ├── assets/
@@ -127,15 +151,40 @@ AgroPacayales/
     ├── app/
     │   ├── _layout.tsx            # Stack Navigator (Expo Router)
     │   ├── index.tsx              # Pantalla 1: Login de acceso (Hugo Fernandez)
-    │   ├── home.tsx               # Pantalla 2: Principal / Catálogo & KPIs
-    │   └── detail.tsx             # Pantalla 3: Ficha Técnica & Trazabilidad
+    │   ├── home.tsx               # Pantalla 2: Principal / Catálogo & KPIs (Banner Offline)
+    │   └── detail.tsx             # Pantalla 3: Ficha Técnica & Módulo de Storage Local
     ├── components/
     │   ├── Header.tsx             # Barra superior con vector icons
     │   ├── MetricCard.tsx         # Tarjeta de KPIs con Flexbox y vector icons
     │   ├── CropCard.tsx           # Tarjeta de lote interactiva con Pressable
-    │   └── InspectionModal.tsx    # Modal de registro de inspección técnica
+    │   └── InspectionModal.tsx    # Modal de registro con persistencia AsyncStorage
+    ├── services/
+    │   └── storageService.ts      # Servicio de persistencia CRUD con AsyncStorage (AP7)
     ├── constants/
-    │   └── theme.ts               # Paleta de colores agronómica
+    │   └── theme.ts               # Paleta de colores agronómica y tokens de espaciado
     └── data/
         └── cropsData.ts           # Datos de cultivos del Valle de Cañete
 ```
+
+---
+
+## 📋 Guía de Entregables AP7 (Checklist de Evaluación)
+
+Para cumplir con los 4 elementos obligatorios solicitados en la plataforma:
+
+1. **Captura de la Interfaz:**  
+   - Tomar captura de pantalla en la vista de Detalle del Lote (`detail.tsx`), donde se visualiza el **Módulo de Almacenamiento Local Offline (AsyncStorage)** con sus métricas y badges en verde.
+
+2. **Capturas de Funcionamiento (Paso a Paso):**  
+   - **Paso 1:** Abrir el modal de registro y añadir una nueva inspección ("Control Fitosanitario en Lote 04").
+   - **Paso 2:** Observar el mensaje de éxito y la tarjeta con el badge `💾 Storage Local`.
+   - **Paso 3:** Recargar la aplicación o cerrar la pantalla y volver a entrar para demostrar que la inspección persiste intacta en la memoria del dispositivo sin base de datos externa.
+   - **Paso 4 (Opcional):** Presionar el botón `Eliminar` para demostrar el borrado local del registro.
+
+3. **Repositorio de GitHub:**  
+   - URL oficial con el código fuente actualizado:  
+     `https://github.com/HugoFernandezDev/AgropacayalesApp.git`
+
+4. **Video Demostrativo:**  
+   - Grabación breve (1-2 minutos) mostrando el login, navegación al lote, registro de inspección, verificación del almacenamiento local persistente tras recarga, y demostración en emulador/navegador.
+

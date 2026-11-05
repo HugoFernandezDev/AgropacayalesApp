@@ -4,41 +4,48 @@ import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing, BorderRadius } from '../constants/theme';
 
 interface MetricCardProps {
-  label: string;
+  label?: string;
+  title?: string;
   value: string | number;
   unit?: string;
   icon?: React.ReactNode;
-  iconName?: keyof typeof Ionicons.glyphMap;
+  iconName?: any;
   accentColor?: string;
+  color?: string;
 }
 
 export const MetricCard: React.FC<MetricCardProps> = ({
   label,
+  title,
   value,
   unit,
   icon,
   iconName,
-  accentColor = Colors.primary,
+  accentColor,
+  color,
 }) => {
+  const activeLabel = label || title || '';
+  const activeColor = accentColor || color || Colors.primary;
+
   return (
     <View style={styles.card}>
       <View style={styles.topRow}>
-        <View style={[styles.iconContainer, { backgroundColor: accentColor + '15' }]}>
+        <View style={[styles.iconContainer, { backgroundColor: activeColor + '15' }]}>
           {icon ? (
             icon
           ) : iconName ? (
-            <Ionicons name={iconName} size={18} color={accentColor} />
+            <Ionicons name={iconName} size={18} color={activeColor} />
           ) : (
-            <Ionicons name="stats-chart" size={18} color={accentColor} />
+            <Ionicons name="stats-chart" size={18} color={activeColor} />
           )}
         </View>
-        <View style={[styles.indicator, { backgroundColor: accentColor }]} />
+        <View style={[styles.indicator, { backgroundColor: activeColor }]} />
       </View>
       <View style={styles.valueRow}>
-        <Text style={[styles.valueText, { color: accentColor }]}>{value}</Text>
+        <Text style={[styles.valueText, { color: activeColor }]}>{value}</Text>
         {unit ? <Text style={styles.unitText}>{unit}</Text> : null}
       </View>
-      <Text style={styles.labelText}>{label}</Text>
+      <Text style={styles.labelText}>{activeLabel}</Text>
     </View>
   );
 };

@@ -7,7 +7,7 @@ interface InspectionModalProps {
   visible: boolean;
   lotName: string;
   onClose: () => void;
-  onSubmit: (note: string, inspector: string) => void;
+  onSubmit: (note: string, inspector: string, tipo?: string) => void;
 }
 
 export const InspectionModal: React.FC<InspectionModalProps> = ({
@@ -21,11 +21,10 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
   const [tipo, setTipo] = useState('Control Fitosanitario');
 
   const handleSave = () => {
-    if (!note.trim()) {
-      onSubmit('Inspección de rutina completada sin observaciones.', inspector);
-    } else {
-      onSubmit(`[${tipo}] ${note}`, inspector);
-    }
+    const finalNote = note.trim()
+      ? note.trim()
+      : 'Inspección de rutina completada sin observaciones.';
+    onSubmit(finalNote, inspector, tipo);
     setNote('');
     onClose();
   };
@@ -88,6 +87,13 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
               multiline
               numberOfLines={3}
             />
+          </View>
+
+          <View style={styles.storageNotice}>
+            <Ionicons name="save-outline" size={14} color={Colors.primary} style={{ marginRight: 6 }} />
+            <Text style={styles.storageNoticeText}>
+              Se guardará en el almacenamiento local del dispositivo (AsyncStorage).
+            </Text>
           </View>
 
           <View style={styles.buttonRow}>
@@ -200,6 +206,23 @@ const styles = StyleSheet.create({
   pillTextActive: {
     color: Colors.white,
     fontWeight: '700',
+  },
+  storageNotice: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F1F8E9',
+    borderRadius: BorderRadius.sm,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 6,
+    marginBottom: Spacing.sm,
+    borderWidth: 1,
+    borderColor: '#DCEDC8',
+  },
+  storageNoticeText: {
+    fontSize: 11,
+    color: Colors.primaryDark,
+    fontWeight: '500',
+    flex: 1,
   },
   buttonRow: {
     flexDirection: 'row',
